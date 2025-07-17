@@ -53,8 +53,8 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;SIM_EXEC_INDEX=0;SIM_CPUCORE_NAME="CortexM4";USERVICE_NAME="NOT_SET";USERVICE_VERSION_STR="NOT_SET";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\usSimulator\;..\..\..\..\..\Include;..\..\..\..\CPU\x86\uServicePackage\Include;..\..\..\..\CPU\x86\uServicePackage\Include\SysCall;..\..\..\..\CPU\x86\uServicePackage\Include\uService;..\..\..\..\..\Configurations;..\..\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;SIM_EXEC_INDEX=0;SIM_CPUCORE_NAME="CortexM4";USERVICE_NAME="TINYAES";USERVICE_VERSION_STR="1.0";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\usSimulator\;..\..\..\..\..\Include;..\..\..\..\CPU\x86\uServicePackage\Include;..\..\..\..\CPU\x86\uServicePackage\Include\SysCall;..\..\..\..\CPU\x86\uServicePackage\Include\uService;..\..\..\..\..\Configurations;..\..\Common;..\..\..\..\..\Source\tiny-AES;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -84,6 +84,9 @@
     <ClCompile Include="..\..\..\..\..\Source\main.c">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Source\tiny-AES\tiny-aes.c">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
     </ClCompile>
     <ClCompile Include="..\..\..\..\CPU\x86\uServicePackage\Simulation\WinForm\SysCallSimulator.c">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>

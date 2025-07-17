@@ -19,5 +19,8 @@
     <ClCompile Include="..\..\..\..\CPU\x86\uServicePackage\Simulation\WinForm\SysCallSimulator.c">
       <Filter>Simulator</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Source\tiny-AES\tiny-aes.c">
+      <Filter>Microservice</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
