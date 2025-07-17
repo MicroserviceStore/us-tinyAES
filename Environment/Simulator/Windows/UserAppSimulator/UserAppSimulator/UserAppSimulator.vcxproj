@@ -53,8 +53,8 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;SIM_EXEC_INDEX=1;SIM_CPUCORE_NAME="CortexM4";USERVICE_PUBLIC_HEADER="us-Template.h";USERVICE_INTERNAL_HEADER="us-Template_Internal.h";USERVICE_NAME_NONSTR=Template;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\UserAppSimulator\;..\..\..\..\..\Configurations;..\..\..\..\..\Include;..\..\..\..\CPU\x86\uServicePackage\Include;..\..\..\..\CPU\x86\uServicePackage\Include\SysCall;..\..\..\..\CPU\x86\uServicePackage\Include\uService;..\..\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;SIM_EXEC_INDEX=1;SIM_CPUCORE_NAME="CortexM4";USERVICE_PUBLIC_HEADER="us-TinyAES.h";USERVICE_INTERNAL_HEADER="us-TinyAES_Internal.h";USERVICE_NAME_NONSTR=TINYAES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\UserAppSimulator\;..\..\..\..\..\Configurations;..\..\..\..\..\Include;..\..\..\..\CPU\x86\uServicePackage\Include;..\..\..\..\CPU\x86\uServicePackage\Include\SysCall;..\..\..\..\CPU\x86\uServicePackage\Include\uService;..\..\Common;..\..\..\..\..\Source\tiny-AES;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

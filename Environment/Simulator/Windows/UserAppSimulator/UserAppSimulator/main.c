@@ -1,35 +1,95 @@
+/*
+ * @file main.c
+ *
+ ******************************************************************************/
 
-#define LOG_INFO_ENABLED 1
-#define LOG_WARNING_ENABLED 1
-#define LOG_ERROR_ENABLED 1
+ /********************************* INCLUDES ***********************************/
+#define LOG_INFO_ENABLED            1
+#define LOG_WARNING_ENABLED         1
+#define LOG_ERROR_ENABLED           1
+
 #include "SysCall.h"
 
-#include "us-Template.h"
+#include "us-tinyAES.h"
 
-#define CHECK_TEMPLATE_ERR(sysStatus, usStatus) \
-                if (sysStatus != SysStatus_Success || usStatus != usTemplate_Success) \
-                { LOG_PRINTF(" > us Test Failed. Line %d. Sys Status %d | us Status %d", __LINE__, sysStatus, usStatus); return; }
+/***************************** MACRO DEFINITIONS ******************************/
+
+/***************************** TYPE DEFINITIONS *******************************/
+
+/**************************** FUNCTION PROTOTYPES *****************************/
+
+/******************************** VARIABLES ***********************************/
+
+/***************************** PRIVATE FUNCTIONS ******************************/
+
+void tinyAESTest(void)
+{
+#define CHECK_AES_ERR(sysStatus, usStatus) \
+                if (sysStatus != SysStatus_Success || usStatus != usTinyAESOp_Success) \
+                { LOG_PRINTF(" > AES Test Failed. Line %d. Sys Status %d | usAES Status %d", __LINE__, sysStatus, usStatus); return; }
+    uint8_t key[32];
+    uint8_t iv[16];
+    uint8_t plainData[32];
+    uint8_t encData[32];
+    uint8_t decData[32];
+
+    uint32_t sessionID;
+    usTinyAESStatus usStatus;
+    uint32_t timeoutInMs = 10000;
+    SysStatus retVal;
+
+    memset(plainData, 0, sizeof plainData);
+    memcpy(plainData, "ZAYA", sizeof("ZAYA"));
+
+    memset(encData, 0, sizeof encData);
+    memset(decData, 0, sizeof decData);
+
+    retVal = us_TINYAES_Initialise();
+    CHECK_AES_ERR(retVal, 0);
+
+    /* Encrypt */
+    {
+        retVal = us_tinyAES_OpenSession(usTinyAESAlg_AES_CBC_256,
+            key, sizeof(key),
+            iv, sizeof(iv),
+            timeoutInMs, &sessionID, &usStatus);
+        CHECK_AES_ERR(retVal, usStatus);
+
+        retVal = us_tinyAES_Encrypt(sessionID, plainData, sizeof(plainData), encData, sizeof(encData), timeoutInMs, &usStatus);
+        CHECK_AES_ERR(retVal, usStatus);
+
+        retVal = us_tinyAES_CloseSession(sessionID, timeoutInMs, &usStatus);
+        CHECK_AES_ERR(retVal, usStatus);
+    }
+
+    /* Decrypt */
+    {
+        retVal = us_tinyAES_OpenSession(usTinyAESAlg_AES_CBC_256,
+            key, sizeof(key),
+            iv, sizeof(iv), timeoutInMs, &sessionID, &usStatus);
+        CHECK_AES_ERR(retVal, usStatus);
+
+        retVal = us_tinyAES_Decrypt(sessionID, encData, sizeof(encData), decData, sizeof(decData), timeoutInMs, &usStatus);
+        CHECK_AES_ERR(retVal, usStatus);
+
+        retVal = us_tinyAES_CloseSession(sessionID, timeoutInMs, &usStatus);
+        CHECK_AES_ERR(retVal, usStatus);
+    }
+
+    LOG_PRINTF(" > tinyAES Encryption Test %s", memcmp(plainData, decData, sizeof(plainData)) == 0 ? "Success" : "Failed");
+}
+
+/***************************** PUBLIC FUNCTIONS *******************************/
+
 int main(void)
 {
-    SysStatus retVal;
+    SysStatus retVal; (void)retVal;
 
     LOG_PRINTF(" > Container : Microservice Test User App");
 
     SYS_INITIALISE_IPC_MESSAGEBOX(retVal, 4);
 
-    retVal = us_Template_Initialise();
-    CHECK_TEMPLATE_ERR(retVal, 0);
+    tinyAESTest();
 
-    {
-        usTemplateStatus usStatus;
-        int32_t a = 5;
-        int32_t b = 6;
-        int32_t expectedResult = a + b;
-        int32_t result = 0;
-
-        retVal = us_Template_Sum(a, b, &result, &usStatus);
-        CHECK_TEMPLATE_ERR(retVal, usStatus);
-
-        LOG_PRINTF(" > us Test %s", result == expectedResult ? "Success" : "Failed");
-    }
+    Sys_Exit();
 }
